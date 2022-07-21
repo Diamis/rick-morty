@@ -5,15 +5,15 @@ export class Request {
     try {
       const response = await fetch(url);
       const data = await response.json();
-      return data
+      return data;
     } catch (e) {
       console.error(e)
-      return
+      return;
     }
   };
 
   getCharacters = async (query?: string) => {
-    const params = new URLSearchParams(query ? { name: query } : {})
+    const params = new URLSearchParams(query ? { name: query } : {});
     return await this.baseRequest(BASEURL + params);
   };
 

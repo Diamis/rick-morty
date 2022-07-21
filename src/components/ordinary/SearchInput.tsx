@@ -12,8 +12,8 @@ const SearchInput: React.FC<SearchInputProps> = ({ changeCallback }) => {
     setSearchValue(value);
     if (value.length > 1) {
       changeCallback(value);
-    }
-  };
+    };
+  }
 
   return (
     <>

@@ -3,6 +3,7 @@ import Request from '../services/Request';
 import CharacterCard from "./ordinary/CharacterCard";
 import SearchInput from "./ordinary/SearchInput";
 import { Character } from "../types";
+import Current from "../store/Current";
 
 const Characters: React.FC = () => {
   const [characters, setCharacters] = useState<Character[]>([]);
@@ -14,6 +15,7 @@ const Characters: React.FC = () => {
 
   const getCharacters = async (query?: string) => {
     setIsFetching(true)
+    console.log('fetch')
     const data = await requestService.getCharacters(query);
     setIsFetching(false)
     if (data) {
@@ -34,8 +36,8 @@ const Characters: React.FC = () => {
 
   const timeoute = (query: string) => {
     if (timeoutID) {
-      return
-    }
+      return;
+    };
     timeoutID = setTimeout(() => {
       getCharacters(query);
     }, 500);
@@ -43,15 +45,28 @@ const Characters: React.FC = () => {
     return () => clearTimeout(timeoutID);
   }
 
+  const setCurrentCharacter = (character: Character) => {
+    if (character.name.includes('Rick')) {
+      Current.setCharacterRick(character);
+    } else if (character.name.includes('Morty')) {
+      Current.setCharacterMorty(character);
+    } else {
+      return
+    };
+  }
+
   return (
     <div className="w-8/12">
       <SearchInput changeCallback={timeoute} />
-      {isFetching && <div className="mb-5 text-xl text-white  text-center">Fetching</div>}
+      {isFetching && <div className="mb-5 text-xl text-white text-center">Fetching</div>}
       <div className="flex justify-center flex-wrap">
         {notFound ? (
           <div className="text-xl text-white text-center">Not Found</div>) :
           characters.map((item, key) => (
-            <CharacterCard character={item} key={key} />
+            <CharacterCard
+              character={item}
+              onClick={setCurrentCharacter}
+              key={key} />
           ))}
       </div>
     </div>
