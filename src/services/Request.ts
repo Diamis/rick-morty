@@ -1,4 +1,4 @@
-const BASEURL = 'https://rickandmortyapi.com/api/'
+const BASEURL = 'https://rickandmortyapi.com/api/character/?'
 
 export class Request {
   private baseRequest = async (url: string) => {
@@ -12,8 +12,9 @@ export class Request {
     }
   };
 
-  getAllcharacters = async () => {
-    return await this.baseRequest(BASEURL + 'character');
+  getCharacters = async (query?: string) => {
+    const params = new URLSearchParams(query ? { name: query } : {})
+    return await this.baseRequest(BASEURL + params);
   };
 
 }
