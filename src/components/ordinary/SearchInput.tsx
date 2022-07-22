@@ -12,15 +12,15 @@ const SearchInput: React.FC<SearchInputProps> = ({ changeCallback }) => {
     if (query.length > 1) {
       changeCallback(query);
     };
-  }, [])
+  }, []);
 
-  const inputHandler = useMemo(() => throttle(changeHandler, 500), [changeHandler])
+  const inputHandler = useMemo(() => throttle(changeHandler, 500), [changeHandler]);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSearchValue(value);
-    inputHandler(value)
-  }
+    inputHandler(value);
+  };
 
   return (
     <div className="w-full">

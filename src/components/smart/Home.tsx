@@ -12,24 +12,25 @@ const Home: React.FC = () => {
   const [isFetching, setIsFetching] = useState<boolean>(false);
 
   const getCharacters = async (query?: string) => {
-    setIsFetching(true)
+    setIsFetching(true);
     const data = await requestService.getCharacters(query);
-    setIsFetching(false)
+    setIsFetching(false);
     if (data) {
       if (data.error) {
-        setNotFound(true)
-        return
+        setNotFound(true);
+        setCharacters([]);
+        return;
       }
-      setCharacters(data.results)
-      setNotFound(false)
+      setCharacters(data.results);
+      setNotFound(false);
     } else {
-      alert('Ошибка сервера,попробуйте обновите страницу.')
-    }
+      alert('Ошибка сервера,попробуйте обновите страницу.');
+    };
   }
 
   useEffect(() => {
-    getCharacters()
-  }, [])
+    getCharacters();
+  }, []);
 
   const setCurrentCharacter = (character: Character) => {
     if (character.name.includes('Rick')) {
@@ -37,9 +38,9 @@ const Home: React.FC = () => {
     } else if (character.name.includes('Morty')) {
       Current.setCharacterMorty(character);
     } else {
-      return
+      return;
     };
-  }
+  };
 
   return (
     <div className="w-8/12">
